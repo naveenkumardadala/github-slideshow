@@ -1,16 +1,25 @@
 timezone:    Europe/Berlin
 future:      false
 # Set baseurl to the base path of the site eg "/mytalk"
+# This is important if the site is hosted in a subdirectory of a domain.
+# For example, if your site is at username.github.io/github-slideshow/,
+# then baseurl should be "/github-slideshow".
 baseurl:     "/github-slideshow"
 # The allowed values are 'rouge', 'pygments' or null.
+# Rouge is a pure-Ruby syntax highlighter. Pygments requires Python.
 highlighter: rouge
 # markdown - Valid options are [ maruku | rdiscount | kramdown | redcarpet ]
+# kramdown is a fast, pure-Ruby Markdown superset converter.
 markdown:    kramdown
+# lsi: Use latent semantic indexing for smarter related posts. (Requires GSL)
 lsi:         false
+# Permalink structure for posts. "/:title" means posts will be accessible at /your-post-title.html
 permalink:   "/:title"
 
+# Kramdown specific settings
 kramdown:
   ## for german: "sbquo,lsquo,bdquo,ldquo"
+  # Defines how smart quotes are rendered. lsquo = left single quote, rsquo = right single quote, etc.
   smart_quotes: lsquo,rsquo,ldquo,rdquo
 
 plugins:
@@ -32,74 +41,84 @@ slideNumber:
   # Slide number formatting can be configured using these variables:
   #  "h.v":  horizontal . vertical slide number (default)
   #  "h/v":  horizontal / vertical slide number
-  #    "c":  flattened slide number
-  #  "c/t":  flattened slide number / total slides
-  # "none":  dont't show slide numbers
-  format:    "c/t"
+  #    "c":  flattened slide number (e.g., 1, 2, 3)
+  #  "c/t":  flattened slide number / total slides (e.g., 1/10, 2/10)
+  # "none":  don't show slide numbers
+  format:    "c/t" # Current format: slide number / total slides
 
-## Reveal.initialize
-## At the end of your page Jekyll initializes reveal by running the following code. Note that all config values are optional and will default as specified below.
-## Note that the new default vertical centering option will break compatibility with slides that were using transitions with backgrounds ("cube" and "page"). To restore the previous behavior, set "center" to "false".
+## Reveal.js Initialization Configuration (`Reveal.initialize`)
+## These settings are passed directly to Reveal.js when the slideshow is initialized.
+## All config values are optional and will default as specified in the Reveal.js documentation.
+## Note: The `center: true` default (for vertical centering) can affect compatibility
+## with older slides using transitions with backgrounds (e.g., "cube", "page").
+## If you experience issues, set "center" to "false".
 reveal:
-  ## Display controls in the bottom right corner
+  ## Display controls (navigation arrows) in the bottom right corner
   controls: false
-  ## Display a presentation progress bar
+  ## Display a presentation progress bar at the bottom
   progress: true
-  ## Display the page number of the current slide
-  #slideNumber: false
-  ## Push each slide change to the browser history
+  ## Display the page number of the current slide.
+  ## Note: This is different from the `slideNumber` block above, which is a Reveal.js plugin.
+  ## This `slideNumber` setting within `reveal` refers to Reveal.js's own slide numbering.
+  ## It can be a boolean (true/false) or a string for custom formatting (e.g., "h.v").
+  ## For this project, the plugin `slideNumber.format` is used for more control.
+  #slideNumber: false # Example: set to true to use Reveal.js built-in numbering
+  ## Push each slide change to the browser history (allows back/forward navigation)
   history: true
-  ## Enable keyboard shortcuts for navigation
+  ## Enable keyboard shortcuts for navigation (e.g., spacebar, arrow keys)
   keyboard: true
-  ## Enable the slide overview mode
+  ## Enable the slide overview mode (activated by pressing 'esc')
   overview: true
-  ## Vertical centering of slides
+  ## Vertical centering of slides on the page
   center: true
   ## Enables touch navigation on devices with touch input
   touch: true
-  ## Loop the presentation
+  ## Loop the presentation (go back to the first slide after the last)
   loop: false
-  ## Change the presentation direction to be RTL
+  ## Change the presentation direction to be right-to-left (RTL)
   #rtl: false
-  ## Turns fragments on and off globally
+  ## Turns fragments on and off globally. Fragments are used to reveal elements on a slide one by one.
   fragments: true
   ## Flags if the presentation is running in an embedded mode
-  ## i.e. contained within a limited portion of the screen
+  ## (i.e., contained within a limited portion of the screen)
   #embedded: false
   ## Number of milliseconds between automatically proceeding to the
-  ## next slide, disabled when set to 0, this value can be overwritten
-  ## by using a data-autoslide attribute on your slides
+  ## next slide. Disabled when set to 0. This can be overridden
+  ## by using a `data-autoslide` attribute on individual slides.
   #autoSlide: 0
-  ## Stop auto-sliding after user input
+  ## Stop auto-sliding after user input (e.g., clicking or navigating)
   #autoSlideStoppable: true
   ## Enable slide navigation via mouse wheel
   #mouseWheel: false
-  ## Hides the address bar on mobile devices
+  ## Hides the address bar on mobile devices for a more immersive experience
   #hideAddressBar: true
-  ## Opens links in an iframe preview overlay
+  ## Opens links in an iframe preview overlay instead of navigating away
   #previewLinks: false
-  ## Transition style (default/cube/page/concave/zoom/linear/fade/none)
+  ## Default transition style for slides (e.g., default/cube/page/concave/zoom/linear/fade/none)
   transition: linear
-  ## Transition speed (default/fast/slow)
+  ## Default transition speed (default/fast/slow)
   #transitionSpeed: default
-  ## Transition style for full page slide backgrounds (default/none/slide/concave/convex/zoom)
+  ## Transition style for full page slide backgrounds (e.g., default/none/slide/concave/convex/zoom)
   backgroundTransition: slide
-  ## Number of slides away from the current that are visible
+  ## Number of slides away from the current slide that are preloaded and visible.
+  ## Helps with smoother transitions for content-heavy slides.
   #viewDistance: 3
-  ## Parallax background image (e.g. "'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg'")
+  ## Parallax background image for the entire presentation.
+  ## Example: "'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg'"
   #parallaxBackgroundImage: ''
-  ## Parallax background size (CSS syntax, e.g. "2100px 900px")
+  ## Parallax background size (CSS syntax, e.g., "2100px 900px")
   #parallaxBackgroundSize: ''
-  ## The "normal" size of the presentation, aspect ratio will be preserved
-  ## when the presentation is scaled to fit different resolutions. Can be
-  ## specified using percentage units.
-  width: 1000
-  height: 920
-  ## Factor of the display size that should remain empty around the content
+  ## The "normal" or "designed" size of the presentation.
+  ## Reveal.js will scale the content to fit different resolutions while preserving this aspect ratio.
+  ## Can be specified using pixel units or percentage units.
+  width: 1000 # Default width of the presentation slides in pixels
+  height: 920 # Default height of the presentation slides in pixels
+  ## Factor of the display size that should remain empty around the content (0 to 1).
+  ## For example, 0.1 means 10% margin.
   margin: 0.1
-  ## Bounds for smallest/largest possible scale to apply to content
-  minScale: 0.2
-  maxScale: 1.5
+  ## Bounds for smallest/largest possible scale to apply to content when resizing.
+  minScale: 0.2 # Minimum scale factor
+  maxScale: 1.5 # Maximum scale factor
 
 exclude: [
   "Gemfile",
